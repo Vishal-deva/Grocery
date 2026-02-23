@@ -6,8 +6,6 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
-import java.util.Arrays;
-
 @Configuration
 public class CorsConfig {
 
@@ -15,33 +13,21 @@ public class CorsConfig {
     public CorsFilter corsFilter() {
         CorsConfiguration config = new CorsConfiguration();
 
-        // ✅ Allow credentials for cookies/sessions
+        // Allow credentials for cookies/sessions
         config.setAllowCredentials(true);
 
-        // ✅ Add allowed origins (localhost for dev + Vercel frontend for production)
-        config.setAllowedOrigins(Arrays.asList(
-                "http://localhost:5500",
-                "http://127.0.0.1:5500",
-                "https://grocery-frontend-eta-lovat.vercel.app"
-        ));
+        // Allow your frontend domain + localhost for testing
+        config.addAllowedOriginPattern("*"); // Use "*" for testing or Vercel domain specifically
+        // config.addAllowedOrigin("https://grocery-frontend-eta-lovat.vercel.app");
+        // config.addAllowedOrigin("http://localhost:5500");
 
-        // ✅ Allow all common headers
-        config.setAllowedHeaders(Arrays.asList(
-                "Origin",
-                "Content-Type",
-                "Accept",
-                "Authorization"
-        ));
+        // Allow all headers
+        config.addAllowedHeader("*");
 
-        config.setAllowedMethods(Arrays.asList(
-                "GET",
-                "POST",
-                "PUT",
-                "DELETE",
-                "OPTIONS"
-        ));
+        // Allow all HTTP methods
+        config.addAllowedMethod("*");
 
-        // ✅ Apply this configuration to all endpoints
+        // Register CORS config for all endpoints
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config);
 
