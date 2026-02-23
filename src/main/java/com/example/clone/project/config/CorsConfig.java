@@ -33,7 +33,6 @@ public class CorsConfig {
                 "Authorization"
         ));
 
-        // ✅ Allow all common HTTP methods
         config.setAllowedMethods(Arrays.asList(
                 "GET",
                 "POST",
