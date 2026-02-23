@@ -15,14 +15,34 @@ public class CorsConfig {
     public CorsFilter corsFilter() {
         CorsConfiguration config = new CorsConfiguration();
 
-        config.setAllowCredentials(true); // Allow cookies/sessions
+        // ✅ Allow credentials for cookies/sessions
+        config.setAllowCredentials(true);
+
+        // ✅ Add allowed origins (localhost for dev + Vercel frontend for production)
         config.setAllowedOrigins(Arrays.asList(
                 "http://localhost:5500",
-                "http://127.0.0.1:5500" // Add both to match frontend
+                "http://127.0.0.1:5500",
+                "https://grocery-frontend-eta-lovat.vercel.app"
         ));
-        config.setAllowedHeaders(Arrays.asList("Origin", "Content-Type", "Accept"));
-        config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
 
+        // ✅ Allow all common headers
+        config.setAllowedHeaders(Arrays.asList(
+                "Origin",
+                "Content-Type",
+                "Accept",
+                "Authorization"
+        ));
+
+        // ✅ Allow all common HTTP methods
+        config.setAllowedMethods(Arrays.asList(
+                "GET",
+                "POST",
+                "PUT",
+                "DELETE",
+                "OPTIONS"
+        ));
+
+        // ✅ Apply this configuration to all endpoints
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config);
 
